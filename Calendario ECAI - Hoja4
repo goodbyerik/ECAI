@@ -1,0 +1,83 @@
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+    Dim celda, celdaTarget As Range
+       
+    'Validar si el cambio es en la columna 3 y que además haya una fecha valida en columna 1
+    If Target.Column = 3 And IsDate(Cells(Target.Row, 1)) Then
+        
+        'Recorrer cada celda en caso de selección múltiple
+        For Each celdaTarget In Target.Cells
+        
+            'Validar si se capturó texto en la celda y proceder a insertar comentario
+            If Trim(celdaTarget.Value) <> "" Then
+                
+                'Insertar comentario en hoja Completo
+                For Each celda In [RangoCompleto]
+                    If celda.Value = Cells(celdaTarget.Row, 1).Value Then
+                        celda.ClearComments
+                        celda.AddComment celdaTarget.Value
+                    End If
+                Next celda
+                
+                'Insertar comentario en hoja Mensual
+                For Each celda In [RangoMensual]
+                    If celda.Value = Cells(celdaTarget.Row, 1).Value Then
+                        celda.ClearComments
+                        celda.AddComment celdaTarget.Value
+                    End If
+                Next celda
+                
+                'Insertar comentario en hoja Mini
+                For Each celda In [RangoMini]
+                    If celda.Value = Cells(celdaTarget.Row, 1).Value Then
+                        celda.ClearComments
+                        celda.AddComment celdaTarget.Value
+                    End If
+                Next celda
+                
+                'Insertar comentario en hoja Semanal
+                For Each celda In [RangoSemanal]
+                    If celda.Value = Cells(celdaTarget.Row, 1).Value Then
+                        celda.ClearComments
+                        celda.AddComment celdaTarget.Value
+                    End If
+                Next celda
+                
+        
+            'La celda está vacía por lo tanto hay que eliminar comentario
+            Else
+                
+                'Eliminar comentario de la hoja Completo
+                For Each celda In [RangoCompleto]
+                    If celda.Value = Cells(celdaTarget.Row, 1).Value Then
+                        celda.ClearComments
+                    End If
+                Next celda
+                
+                'Eliminar comentario de la hoja Mensual
+                For Each celda In [RangoMensual]
+                    If celda.Value = Cells(celdaTarget.Row, 1).Value Then
+                        celda.ClearComments
+                    End If
+                Next celda
+                
+                'Eliminar comentario de la hoja Mini
+                For Each celda In [RangoMini]
+                    If celda.Value = Cells(celdaTarget.Row, 1).Value Then
+                        celda.ClearComments
+                    End If
+                Next celda
+                
+                'Eliminar comentario de la hoja Semanal
+                For Each celda In [RangoSemanal]
+                    If celda.Value = Cells(celdaTarget.Row, 1).Value Then
+                        celda.ClearComments
+                    End If
+                Next celda
+                
+            End If
+                
+        Next celdaTarget
+        
+    End If
+End Sub
